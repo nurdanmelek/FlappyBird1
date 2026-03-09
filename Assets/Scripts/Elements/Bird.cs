@@ -45,7 +45,7 @@ public class Bird : MonoBehaviour
         // 🔹 1) Küçük ve hızlı titreşim (çarpma hissi)
         sprite.transform.DOShakePosition(
             duration: 0.50f,
-            strength: new Vector3(0.35f, 0.25f, 0f), // 🔴 büyüttük
+            strength: new Vector3(0.25f, 0.15f, 0f), // 🔴 büyüttük
             vibrato: 25,                            // 🔴 daha keskin
             randomness: 20,                         // 🔴 daha kontrollü
             fadeOut: true
@@ -86,6 +86,11 @@ public class Bird : MonoBehaviour
     public void CoinCollected()
     {
         coinManager.CoinCollected();
+    }
+
+    public void RestartBird()
+    {
+        gameObject.SetActive(true);
     }
 
 

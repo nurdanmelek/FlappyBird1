@@ -5,6 +5,8 @@ public class GameDirector : MonoBehaviour
 {
     public CoinManager coinManager;
 
+    public GateManager gateManager;
+
     public FXManager fXManager;
     
     public MainMenu mainMenu;
@@ -42,10 +44,10 @@ public class GameDirector : MonoBehaviour
 
 
         // oyunu baþlat
-        pipeSpawner.Init(); // sadece baðýmlýlýklarý hazýrla (kamera vs)
+        /*pipeSpawner.Init(); // sadece baðýmlýlýklarý hazýrla (kamera vs)
         pipeManager.Init(pipeSpawner, _pipeSpeed, _spawnDistance, _destroyX);
 
-        pipeManager.StartRun(); // ilk pipe'ý üret ve sistemi çalýþtýr
+        pipeManager.StartRun(); // ilk pipe'ý üret ve sistemi çalýþtýr*/
 
         coinManager.StartCoinSpawnCoroutine();
     }
@@ -59,15 +61,14 @@ public class GameDirector : MonoBehaviour
     public void GameOver()
     {
         pipeManager.StopRun();
-
-        coinManager.StartCoinSpawnCoroutine();
     }
 
     public void Restart()
     {
-        pipeManager.ResetAll();
-        pipeManager.StartRun();
-
+        /*pipeManager.ResetAll();
+        pipeManager.StartRun();*/
+        gateManager.RestartGateManager();
+        bird.RestartBird();
         
     }
 
@@ -77,11 +78,11 @@ public class GameDirector : MonoBehaviour
 
         fXManager.PlayBirdDestroyedParticles(bird.transform.position);
        
-        levelManager.RestartLevel();
+        //levelManager.RestartLevel();
 
         uIManager.LevelFailed();
 
-        coinManager.StartCoinSpawnCoroutine();
+        coinManager.StopCoinSpawnCoroutine();
     }
 
     

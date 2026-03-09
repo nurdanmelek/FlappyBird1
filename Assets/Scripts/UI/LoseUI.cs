@@ -15,10 +15,10 @@ public class LoseUI : MonoBehaviour
 
 
     
-    public void Show()
+    public void Show(float delay)
     {
         gameObject.SetActive(true);
-        _canvasGroup.DOFade(1, .1f);
+        _canvasGroup.DOFade(1, .1f).SetDelay(delay);
     }
 
 

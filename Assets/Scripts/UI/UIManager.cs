@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
     {
         // mainMenu.Hide();  olllmuyooor
         
-        loseUI.Show();
+        loseUI.Show(1);
         
     }
 

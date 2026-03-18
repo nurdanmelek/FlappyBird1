@@ -1,12 +1,12 @@
 ﻿using DG.Tweening;
-using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Bird : MonoBehaviour
 {
     public CoinManager coinManager;
-
-
+    public WordsManager wordsManager;
     public SpriteRenderer sprite;
 
     public int startHealth = 3;
@@ -18,12 +18,21 @@ public class Bird : MonoBehaviour
 
     public GameDirector gameDirector;
 
+    public TextMeshPro questionTMP;
+    public string rightAnswer;
     
-
-
     private void OnEnable()
     {
         _currentHealth = startHealth;
+    }
+    
+    public void RestartBird()
+    {
+        gameObject.SetActive(true);
+        var keys = new List<int>(wordsManager.currentLevelKeys);
+        var selectedKey = keys[Random.Range(0, keys.Count)];
+        questionTMP.text = wordsManager.latinWords[selectedKey];
+        rightAnswer = wordsManager.turkishWords[selectedKey];
     }
 
     void LateUpdate()
@@ -32,8 +41,19 @@ public class Bird : MonoBehaviour
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
         transform.position = pos;
     }
-
     
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Pipe"))
+        {
+            GetHit();
+        }
+    }
+    
+    public void CoinCollected()
+    {
+        coinManager.CoinCollected();
+    }
 
     public void GetHit()
     {
@@ -60,45 +80,11 @@ public class Bird : MonoBehaviour
             DestroyBird();
         }
     }
-
-    
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Pipe"))
-        {
-            GetHit();
-        }
-
-
-    }
-
     private void DestroyBird()
     {
         //gameDirector.GameOver();   // pipe'ları durdurmak vb.
         gameObject.SetActive(false); // kuş “yok olsun”
 
         gameDirector.OnBirdDestroyed(); // üst seviyeye haber ver
-
-
     }
-
-    public void CoinCollected()
-    {
-        coinManager.CoinCollected();
-    }
-
-    public void RestartBird()
-    {
-        gameObject.SetActive(true);
-    }
-
-
-
-
-
-    /*public void RestartBird()
-    {
-        print("restartbird");
-    }*/
 }

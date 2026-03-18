@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GateManager : MonoBehaviour
 {
+    public WordsManager wordsManager;
     public float spawnInterval;
     public float gateSpawnDistance;
 
@@ -28,7 +29,7 @@ public class GateManager : MonoBehaviour
         {
             var newGate = Instantiate(gatePrefab, transform);
             newGate.transform.position = Vector3.right * gateSpawnDistance;
-            newGate.StartGate();
+            newGate.StartGate(wordsManager.ReturnTurkishWords());
             yield return new WaitForSeconds(spawnInterval);
         }
     }

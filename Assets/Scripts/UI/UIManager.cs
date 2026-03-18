@@ -11,12 +11,13 @@ public class UIManager : MonoBehaviour
     public WinUI winUI;
 
     public LoseUI loseUI;
+    public HintUI hintUI;
 
     public void GameStarted()
     {
-       
         winUI.Hide();
         loseUI.Hide();
+        hintUI.Hide();
     }
 
     public void ShowMainMenu()
@@ -26,7 +27,9 @@ public class UIManager : MonoBehaviour
 
     public void PlayGameButtonPressed()
     {
-        gameDirector.Restart();
+        gameDirector.CreateLevelData();
+        hintUI.Show(0);
+        //gameDirector.Restart();
     }
 
 
@@ -45,7 +48,7 @@ public class UIManager : MonoBehaviour
 
     public void ReStartLevelButtonPressed()
     {
-        gameDirector.Restart();
+        gameDirector.RestartLevel();
 
         // gameDirector.levelManager.RestartLevel();
     }
@@ -55,4 +58,9 @@ public class UIManager : MonoBehaviour
     {
         gameDirector.Restart();
     }*/
+    public void HintUIButtonPressed()
+    {
+        hintUI.Hide();
+        gameDirector.RestartLevel();
+    }
 }

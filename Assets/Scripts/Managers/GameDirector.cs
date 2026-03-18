@@ -13,15 +13,17 @@ public class GameDirector : MonoBehaviour
     
     public UIManager uIManager;
     
+    public WordsManager wordsManager;
+    
     
     
     public LevelManager levelManager;
     public PipeManager pipeManager;
     public Bird bird;
 
-    // Bölümü oluþtur
-    // Düþmanlarý oluþtur
-    // Oyuncuyu resetle; örneðin bölü bittiðinde oyuncu haritada alakasýz bir yerde duruyor olabilir; oyuncuyu haritanýn baþýna getirebilmek için önemli.
+    // Bï¿½lï¿½mï¿½ oluï¿½tur
+    // Dï¿½ï¿½manlarï¿½ oluï¿½tur
+    // Oyuncuyu resetle; ï¿½rneï¿½in bï¿½lï¿½ bittiï¿½inde oyuncu haritada alakasï¿½z bir yerde duruyor olabilir; oyuncuyu haritanï¿½n baï¿½ï¿½na getirebilmek iï¿½in ï¿½nemli.
 
    
     public PipeSpawner pipeSpawner;
@@ -32,76 +34,46 @@ public class GameDirector : MonoBehaviour
     private float _spawnDistance = 8f;
     private float _destroyX = -20f;
 
-
-
     private void Start()
     {
         // uIManager.ShowMainMenu();
-
-
         mainMenu.Show();
         uIManager.GameStarted();
-
-
-        // oyunu baþlat
-       pipeSpawner.Init(); // sadece baðýmlýlýklarý hazýrla (kamera vs)
-        pipeManager.Init(pipeSpawner, _pipeSpeed, _spawnDistance, _destroyX);
-
-        pipeManager.StartRun(); // ilk pipe'ý üret ve sistemi çalýþtýr*/
-
-        coinManager.StartCoinSpawnCoroutine();
+        // oyunu baï¿½lat
     }
-
-    /*public void Win()
-    {
-        uIManager.LevelCompleted();
-    }*/
-
     // GameOver / Restart gibi eventlerde:
     public void GameOver()
     {
         pipeManager.StopRun();
     }
 
-    public void Restart()
+    public void RestartLevel()
     {
+        pipeSpawner.Init(); // sadece baï¿½ï¿½mlï¿½lï¿½klarï¿½ hazï¿½rla (kamera vs)
+        pipeManager.Init(pipeSpawner, _pipeSpeed, _spawnDistance, _destroyX);
+
         pipeManager.ResetAll();
         pipeManager.StartRun();
         gateManager.RestartGateManager();
         bird.RestartBird();
+        coinManager.StartCoinSpawnCoroutine();
         
+        pipeManager.StartRun(); // ilk pipe'ï¿½ ï¿½ret ve sistemi ï¿½alï¿½ï¿½tï¿½r*/
+
     }
 
     public void OnBirdDestroyed()
     {
-        GameOver();      // pipe’larý durdur, inputu kes vb.
+        GameOver();      // pipeï¿½larï¿½ durdur, inputu kes vb.
 
         fXManager.PlayBirdDestroyedParticles(bird.transform.position);
-       
-        //levelManager.RestartLevel();
 
         uIManager.LevelFailed();
 
         coinManager.StopCoinSpawnCoroutine();
     }
-
-    
-
-
-
-
-    /*private void Update()
+    public void CreateLevelData()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RestartLevel();
-        }
+        wordsManager.SetLevelKeys();
     }
-
-     void RestartLevel()
-    {
-        levelManager.RestartLevelManager();
-        pipeManager.RestartPipeManager();
-        bird.RestartBird();
-    }*/
 }

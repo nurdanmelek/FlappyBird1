@@ -44,7 +44,7 @@ public class GameDirector : MonoBehaviour
 
 
         // oyunu baþlat
-        /*pipeSpawner.Init(); // sadece baðýmlýlýklarý hazýrla (kamera vs)
+       pipeSpawner.Init(); // sadece baðýmlýlýklarý hazýrla (kamera vs)
         pipeManager.Init(pipeSpawner, _pipeSpeed, _spawnDistance, _destroyX);
 
         pipeManager.StartRun(); // ilk pipe'ý üret ve sistemi çalýþtýr*/
@@ -65,8 +65,8 @@ public class GameDirector : MonoBehaviour
 
     public void Restart()
     {
-        /*pipeManager.ResetAll();
-        pipeManager.StartRun();*/
+        pipeManager.ResetAll();
+        pipeManager.StartRun();
         gateManager.RestartGateManager();
         bird.RestartBird();
         

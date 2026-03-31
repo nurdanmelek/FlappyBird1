@@ -12,6 +12,10 @@ public class GateManager : MonoBehaviour
     public Gate gatePrefab;
     public void RestartGateManager()
     {
+        if (_gateSpawnCoroutine != null)
+        {
+            StopCoroutine(_gateSpawnCoroutine);
+        }
         _gateSpawnCoroutine = StartCoroutine(GateSpawnCoroutine());
     }
 

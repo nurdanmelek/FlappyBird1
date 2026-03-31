@@ -48,6 +48,18 @@ public class Bird : MonoBehaviour
         {
             GetHit();
         }
+
+        if (collision.CompareTag("Option"))
+        {
+            if (collision.GetComponent<Option>().currentText == rightAnswer)
+            {
+                collision.gameObject.SetActive(false);
+            }
+            else
+            {
+                GetHit();
+            }
+        }
     }
     
     public void CoinCollected()

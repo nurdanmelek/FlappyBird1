@@ -18,7 +18,7 @@ public class GameDirector : MonoBehaviour
     
     
     public LevelManager levelManager;
-    public PipeManager pipeManager;
+    public ObstacleManager obstacleManager;
     public Bird bird;
 
     // B�l�m� olu�tur
@@ -26,12 +26,12 @@ public class GameDirector : MonoBehaviour
     // Oyuncuyu resetle; �rne�in b�l� bitti�inde oyuncu haritada alakas�z bir yerde duruyor olabilir; oyuncuyu haritan�n ba��na getirebilmek i�in �nemli.
 
    
-    public PipeSpawner pipeSpawner;
+    public ObstacleSpawner obstacleSpawner;
 
     [Header("Pipe Settings")]
     
     private float _pipeSpeed = 3f;
-    private float _spawnDistance = 8f;
+    private float _spawnDistance = 20f;
     private float _destroyX = -20f;
 
     private void Start()
@@ -44,21 +44,21 @@ public class GameDirector : MonoBehaviour
     // GameOver / Restart gibi eventlerde:
     public void GameOver()
     {
-        pipeManager.StopRun();
+        obstacleManager.StopRun();
     }
 
     public void RestartLevel()
     {
-        pipeSpawner.Init(); // sadece ba��ml�l�klar� haz�rla (kamera vs)
-        pipeManager.Init(pipeSpawner, _pipeSpeed, _spawnDistance, _destroyX);
+        obstacleSpawner.Init(); // sadece ba��ml�l�klar� haz�rla (kamera vs)
+        obstacleManager.Init(obstacleSpawner, _pipeSpeed, _spawnDistance, _destroyX);
 
-        pipeManager.ResetAll();
-        pipeManager.StartRun();
+        obstacleManager.ResetAll();
+        obstacleManager.StartRun();
         gateManager.RestartGateManager();
         bird.RestartBird();
         coinManager.StartCoinSpawnCoroutine();
         
-        pipeManager.StartRun(); // ilk pipe'� �ret ve sistemi �al��t�r*/
+        obstacleManager.StartRun(); // ilk pipe'� �ret ve sistemi �al��t�r*/
 
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 
 
-public class PipeSpawner : MonoBehaviour
+public class ObstacleSpawner : MonoBehaviour
 {
     public GameObject pipePrefab;
 
@@ -14,8 +14,8 @@ public class PipeSpawner : MonoBehaviour
 
     public void Init()
     {
-        // Ýstersen burada kameraya göre minY/maxY hesaplatýrsýn.
-        // Þimdilik Inspector deðerleriyle de gidebilir.
+        // ï¿½stersen burada kameraya gï¿½re minY/maxY hesaplatï¿½rsï¿½n.
+        // ï¿½imdilik Inspector deï¿½erleriyle de gidebilir.
     }
 
 

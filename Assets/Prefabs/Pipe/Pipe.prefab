@@ -302,3 +302,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbab154f27422e45ae0fe2e9834fc98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacle1: {fileID: 3524831090018407326}
+  obstacle2: {fileID: 3277554217044847903}

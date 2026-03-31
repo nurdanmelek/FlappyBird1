@@ -1,16 +1,21 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Pipe : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public GameObject obstacle1;
+    public GameObject obstacle2;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        if (Random.value < .5f)
+        {
+            obstacle1.SetActive(false);
+        }
+        else
+        {
+            obstacle2.SetActive(false);
+        }
     }
 }

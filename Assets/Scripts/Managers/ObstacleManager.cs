@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PipeManager : MonoBehaviour
+public class ObstacleManager : MonoBehaviour
 {
     private readonly List<GameObject> pipes = new();
 
-    private PipeSpawner _spawner;
+    private ObstacleSpawner _spawner;
 
     private GameObject _lastCreatedPipe;
 
@@ -17,13 +17,12 @@ public class PipeManager : MonoBehaviour
 
     private bool _running;
 
+    public float firstPipeDelay;
 
 
-
-
-    public void Init(PipeSpawner pipeSpawner, float pipeSpeed, float spawnDistance, float destroyX)
+    public void Init(ObstacleSpawner obstacleSpawner, float pipeSpeed, float spawnDistance, float destroyX)
     {
-        this._spawner = pipeSpawner;
+        this._spawner = obstacleSpawner;
         this._pipeSpeed = pipeSpeed;
         this._spawnDistance = spawnDistance;
         this._destroyX = destroyX;
@@ -33,7 +32,8 @@ public class PipeManager : MonoBehaviour
     public void StartRun()
     {
         _running = true;
-        CreatePipe(); // ilk pipe
+        Invoke(nameof(CreatePipe), firstPipeDelay); // ilk pipe
+        //CreatePipe(); 
     }
 
     public void StopRun()
@@ -75,7 +75,7 @@ public class PipeManager : MonoBehaviour
             }
         }
 
-        // 2) Yeni pipe üretme
+        // 2) Yeni pipe ï¿½retme
         if (_lastCreatedPipe != null)
         {
             float dist = Vector2.Distance(_lastCreatedPipe.transform.position, _spawner.transform.position);

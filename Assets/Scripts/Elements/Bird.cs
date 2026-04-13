@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class Bird : MonoBehaviour
 {
+    public int CurrentHealth => _currentHealth;
+
+    public HealthUI healthUI;
+
+    private AudioManager _audioManager;
+    
     public CoinManager coinManager;
     public WordsManager wordsManager;
     public SpriteRenderer sprite;
@@ -20,10 +26,18 @@ public class Bird : MonoBehaviour
 
     public TextMeshPro questionTMP;
     public string rightAnswer;
-    
+
+
+    private void Awake()
+    {
+        _audioManager = gameDirector.audioManager;
+    }
+
     private void OnEnable()
     {
         _currentHealth = startHealth;
+
+       
     }
     
     public void RestartBird()
@@ -53,6 +67,8 @@ public class Bird : MonoBehaviour
         {
             if (collision.GetComponent<Option>().currentText == rightAnswer)
             {
+                _audioManager.PlayTrueAnswerAS();
+
                 collision.gameObject.SetActive(false);
             }
             else
@@ -65,38 +81,57 @@ public class Bird : MonoBehaviour
     public void CoinCollected()
     {
         coinManager.CoinCollected();
+        _audioManager.PlayCoinAS(); // 🔊 burada çal
     }
 
     public void GetHit()
     {
-        _currentHealth--;     // _currentHealth değişkeninin değerini 1 azalt
+        _currentHealth--;
 
-        // önce varsa eski tween'leri öldür (üst üste binmesin)
+        if (healthUI != null)
+            healthUI.UpdateHealth(_currentHealth);
+
+        if (_currentHealth > 0)
+        {
+            _audioManager.PlayImpactAS();
+        }
+
         sprite.transform.DOKill();
 
-        // 🔹 1) Küçük ve hızlı titreşim (çarpma hissi)
         sprite.transform.DOShakePosition(
             duration: 0.50f,
-            strength: new Vector3(0.25f, 0.15f, 0f), // 🔴 büyüttük
-            vibrato: 25,                            // 🔴 daha keskin
-            randomness: 20,                         // 🔴 daha kontrollü
+            strength: new Vector3(0.25f, 0.15f, 0f),
+            vibrato: 25,
+            randomness: 20,
             fadeOut: true
         );
 
-        // 🔹 2) Çok hafif kırmızı flash (isteğe bağlı ama güzel durur)
-       // sprite.DOKill();
-       // sprite.DOColor(Color.red, 0.06f).SetLoops(2, LoopType.Yoyo);
-
-        if (_currentHealth == 0 )
+        if (_currentHealth <= 0)
         {
+            _currentHealth = 0;
             DestroyBird();
         }
     }
     private void DestroyBird()
     {
-        //gameDirector.GameOver();   // pipe'ları durdurmak vb.
-        gameObject.SetActive(false); // kuş “yok olsun”
 
+    
+        _audioManager.PlayExplodeAS();
+
+        //gameDirector.GameOver();   // pipe'ları durdurmak vb.
+
+        gameObject.SetActive(false); // kuş “yok olsun”
         gameDirector.OnBirdDestroyed(); // üst seviyeye haber ver
+        
+    }
+
+
+    public void HealOneHeart()
+    {
+        if (_currentHealth < startHealth)
+        {
+            _currentHealth++;
+            healthUI.UpdateHealth(_currentHealth);
+        }
     }
 }

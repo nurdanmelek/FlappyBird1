@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class GameDirector : MonoBehaviour
 {
+   
+    public AudioManager audioManager;
+    
     public CoinManager coinManager;
 
     public GateManager gateManager;
@@ -18,6 +21,9 @@ public class GameDirector : MonoBehaviour
     
     
     public LevelManager levelManager;
+
+    /*public IncrementalManager incrementalManager;*/
+    
     public ObstacleManager obstacleManager;
     public Bird bird;
 
@@ -38,9 +44,22 @@ public class GameDirector : MonoBehaviour
     {
         // uIManager.ShowMainMenu();
         mainMenu.Show();
+
+        /*LoadPersistanceData();*/
+
         uIManager.GameStarted();
         // oyunu ba�lat
+
+        
     }
+
+    /*private void LoadPersistanceData()
+    {
+        incrementalManager.LoadPersistanceData();
+    }*/
+
+
+
     // GameOver / Restart gibi eventlerde:
     public void GameOver()
     {
@@ -58,7 +77,9 @@ public class GameDirector : MonoBehaviour
         bird.RestartBird();
         coinManager.StartCoinSpawnCoroutine();
         
-        obstacleManager.StartRun(); // ilk pipe'� �ret ve sistemi �al��t�r*/
+        obstacleManager.StartRun(); 
+
+        uIManager.ShowInGameUI();
 
     }
 

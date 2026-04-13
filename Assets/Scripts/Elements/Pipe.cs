@@ -7,6 +7,12 @@ public class Pipe : MonoBehaviour
     public GameObject obstacle1;
     public GameObject obstacle2;
 
+    public float moveSpeed = 3f;
+    public float verticalAmplitude = 3f;
+    public float verticalSpeed = 2f;
+
+    private float _startY;
+
     private void Start()
     {
         if (Random.value < .5f)
@@ -17,5 +23,16 @@ public class Pipe : MonoBehaviour
         {
             obstacle2.SetActive(false);
         }
+
+        _startY = transform.position.y;
+    }
+
+
+    // obstacle'larýn yukarý aþaðý hareketi için:
+    void Update()
+    {
+        float newY = _startY + Mathf.Sin(Time.time * verticalSpeed) * verticalAmplitude;
+
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 }

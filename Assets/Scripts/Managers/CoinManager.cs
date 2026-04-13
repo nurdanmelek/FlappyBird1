@@ -6,10 +6,14 @@ using static UnityEditor.PlayerSettings;
 
 public class CoinManager : MonoBehaviour
 {
+    private int _collectedCoinCount = 0;
+    public Bird bird;
 
+
+    public CoinUI coinUI;
     public int coinCount;
     
-    public Coin coinPrefab;
+    public Coin coinPrefab;   // burada tanıtabilmek için bir coin scripti oluşturuyoruz.
 
 
     private Coroutine _coinSpawnCoroutine;
@@ -52,6 +56,20 @@ public class CoinManager : MonoBehaviour
     public void CoinCollected()
     {
         coinCount++;
+
+        coinUI.UpdateCoinCount(coinCount);
+
+        _collectedCoinCount++; // coin say
+
+        if (_collectedCoinCount >= 3)
+        {
+            if (bird.CurrentHealth < bird.startHealth)
+            {
+                bird.HealOneHeart();
+                _collectedCoinCount = 0;
+
+            }
+        }
     }
 }
 

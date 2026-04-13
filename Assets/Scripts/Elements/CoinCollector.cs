@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CoinCollector : MonoBehaviour
 {
+  
 
     public Bird bird;
     private void OnTriggerEnter2D(Collider2D collision)

@@ -13,11 +13,37 @@ public class UIManager : MonoBehaviour
     public LoseUI loseUI;
     public HintUI hintUI;
 
+    public TapUI tapUI;
+
+    public CoinUI coinUI;
+
+    public HealthUI healthUI;
+
     public void GameStarted()
     {
         winUI.Hide();
         loseUI.Hide();
         hintUI.Hide();
+        HideInGameUI();
+        healthUI.Hide();
+    }
+
+    public void ShowInGameUI()
+    {
+        tapUI.Show(1);
+
+        coinUI.Show();
+        coinUI.UpdateCoinCount(0);
+        healthUI.Show(gameDirector.bird.startHealth);
+    }
+
+    public void HideInGameUI()
+    {
+        tapUI.Hide();
+
+        coinUI.Hide();
+
+        healthUI.Hide();
     }
 
     public void ShowMainMenu()
@@ -36,13 +62,16 @@ public class UIManager : MonoBehaviour
     public void LevelCompleted()
     {
         winUI.Show();
+        HideInGameUI();
     }
 
     public void LevelFailed()
     {
         // mainMenu.Hide();  olllmuyooor
         
-        loseUI.Show(1);
+        loseUI.Show(2f);
+
+        HideInGameUI();
         
     }
 

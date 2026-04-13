@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class UIManager : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class UIManager : MonoBehaviour
     public CoinUI coinUI;
 
     public HealthUI healthUI;
+    
+    public AudioManager audioManager;
+    
+    public SeedManager seedManager;
 
     public void GameStarted()
     {
@@ -53,9 +58,14 @@ public class UIManager : MonoBehaviour
 
     public void PlayGameButtonPressed()
     {
+        var state = Random.state;
+        Random.InitState(seedManager.GetCurrentSeed());
+        
         gameDirector.CreateLevelData();
         hintUI.Show(0);
         //gameDirector.Restart();
+        
+        Random.state = state;
     }
 
 
@@ -70,9 +80,9 @@ public class UIManager : MonoBehaviour
         // mainMenu.Hide();  olllmuyooor
         
         loseUI.Show(2f);
+        audioManager.StopExplodeASDelayed(2f);
 
         HideInGameUI();
-        
     }
 
     public void ReStartLevelButtonPressed()
@@ -91,5 +101,15 @@ public class UIManager : MonoBehaviour
     {
         hintUI.Hide();
         gameDirector.RestartLevel();
+    }
+
+    public void ShowWinUI()
+    {
+        winUI.Show();
+    }
+
+    public void LevelCompletedButtonPressed()
+    {
+        PlayGameButtonPressed();
     }
 }

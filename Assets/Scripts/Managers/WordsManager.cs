@@ -10,6 +10,7 @@ public class WordsManager : MonoBehaviour
 
     public void SetLevelKeys()
     {
+        currentLevelKeys.Clear();
         List<int> totalKeys = new List<int>();
         for (int i = 0; i < latinWords.Count; i++)
         {

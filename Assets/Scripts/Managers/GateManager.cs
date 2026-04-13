@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GateManager : MonoBehaviour
@@ -10,6 +11,9 @@ public class GateManager : MonoBehaviour
     private Coroutine _gateSpawnCoroutine;
 
     public Gate gatePrefab;
+    
+    private List<Gate> _gates = new List<Gate>();
+    
     public void RestartGateManager()
     {
         if (_gateSpawnCoroutine != null)
@@ -25,6 +29,18 @@ public class GateManager : MonoBehaviour
         {
             StopCoroutine(_gateSpawnCoroutine);
         }
+
+        Invoke(nameof(ClearGates), 2);
+    }
+
+    void ClearGates()
+    {
+        foreach (var g in _gates)
+        {
+            Destroy(g.gameObject);
+        }
+        
+        _gates.Clear();
     }
 
     IEnumerator GateSpawnCoroutine()
@@ -34,6 +50,7 @@ public class GateManager : MonoBehaviour
             var newGate = Instantiate(gatePrefab, transform);
             newGate.transform.position = Vector3.right * gateSpawnDistance;
             newGate.StartGate(wordsManager.ReturnTurkishWords());
+            _gates.Add(newGate);
             yield return new WaitForSeconds(spawnInterval);
         }
     }

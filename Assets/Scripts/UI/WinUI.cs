@@ -1,3 +1,5 @@
+
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -7,6 +9,14 @@ public class WinUI : MonoBehaviour
     
     private CanvasGroup _canvasGroup;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            Hide();
+            uIManager.LevelCompletedButtonPressed();
+        }
+    }
 
     private void Awake()
     {
@@ -22,7 +32,7 @@ public class WinUI : MonoBehaviour
 
     public void Hide()
     {
-        _canvasGroup.DOFade(0, .1f).OnComplete(() => gameObject.SetActive(false));  // canvas grubu gizle ve gizleme iþlemi bittiðinde objeyi tamamen kapat
+        _canvasGroup.DOFade(0, .1f).OnComplete(() => gameObject.SetActive(false));  // canvas grubu gizle ve gizleme iï¿½lemi bittiï¿½inde objeyi tamamen kapat
     }
 
 

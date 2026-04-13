@@ -18,8 +18,6 @@ public class GameDirector : MonoBehaviour
     
     public WordsManager wordsManager;
     
-    
-    
     public LevelManager levelManager;
 
     /*public IncrementalManager incrementalManager;*/
@@ -33,6 +31,8 @@ public class GameDirector : MonoBehaviour
 
    
     public ObstacleSpawner obstacleSpawner;
+    
+    public SeedManager seedManager;
 
     [Header("Pipe Settings")]
     
@@ -49,7 +49,9 @@ public class GameDirector : MonoBehaviour
 
         uIManager.GameStarted();
         // oyunu ba�lat
-
+        
+        
+        seedManager.RandomizeSeed();
         
     }
 
@@ -61,9 +63,18 @@ public class GameDirector : MonoBehaviour
 
 
     // GameOver / Restart gibi eventlerde:
-    public void GameOver()
+    public void LevelFailed()
     {
+        gateManager.StopGateManager();
         obstacleManager.StopRun();
+    }
+
+    public void LevelCompleted()
+    {
+        gateManager.StopGateManager();
+        obstacleManager.StopRun();
+        seedManager.RandomizeSeed();
+        uIManager.ShowWinUI();
     }
 
     public void RestartLevel()
@@ -85,7 +96,7 @@ public class GameDirector : MonoBehaviour
 
     public void OnBirdDestroyed()
     {
-        GameOver();      // pipe�lar� durdur, inputu kes vb.
+        LevelFailed();      // pipe�lar� durdur, inputu kes vb.
 
         fXManager.PlayBirdDestroyedParticles(bird.transform.position);
 

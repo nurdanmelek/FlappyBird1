@@ -22,6 +22,17 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    public void StopExplodeASDelayed(float delay)
+    {
+        Invoke(nameof(StopExplodeAS), delay);   
+    }
+
+    void StopExplodeAS()
+    {
+        if (explodeAS != null)
+            explodeAS.Stop();
+    }
+
     public void PlayCoinAS()
     {
         if (coinAS != null)

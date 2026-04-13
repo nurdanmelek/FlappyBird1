@@ -12,8 +12,6 @@ public class LoseUI : MonoBehaviour
     {
         _canvasGroup = GetComponent<CanvasGroup>();
     }
-
-
     
     public void Show(float delay)
     {
@@ -24,7 +22,7 @@ public class LoseUI : MonoBehaviour
 
     public void Hide()
     {
-        _canvasGroup.DOFade(0, .1f).OnComplete(() => gameObject.SetActive(false));  // canvas grubu gizle ve gizleme iþlemi bittiðinde objeyi tamamen kapat
+        _canvasGroup.DOFade(0, .1f).OnComplete(() => gameObject.SetActive(false));  // canvas grubu gizle ve gizleme iï¿½lemi bittiï¿½inde objeyi tamamen kapat
     }
 
 

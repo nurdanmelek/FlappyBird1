@@ -27,6 +27,8 @@ public class Bird : MonoBehaviour
     public TextMeshPro questionTMP;
     public string rightAnswer;
 
+    private int _continuousRightAnswer;
+
 
     private void Awake()
     {
@@ -70,9 +72,21 @@ public class Bird : MonoBehaviour
                 _audioManager.PlayTrueAnswerAS();
 
                 collision.gameObject.SetActive(false);
+
+                _continuousRightAnswer++;
+                
+                print(_continuousRightAnswer);
+
+                if (_continuousRightAnswer == 2)
+                {
+                    gameObject.SetActive(false);
+                    _continuousRightAnswer = 0;
+                    gameDirector.LevelCompleted();
+                }
             }
             else
             {
+                _continuousRightAnswer = 0;
                 GetHit();
             }
         }
@@ -114,8 +128,7 @@ public class Bird : MonoBehaviour
     }
     private void DestroyBird()
     {
-
-    
+        _continuousRightAnswer = 0;
         _audioManager.PlayExplodeAS();
 
         //gameDirector.GameOver();   // pipe'ları durdurmak vb.

@@ -81,7 +81,7 @@ public class Bird : MonoBehaviour
                 {
                     gameObject.SetActive(false);
                     _continuousRightAnswer = 0;
-                    gameDirector.LevelCompleted();
+                    Invoke(nameof(CompleteLevelDelayed), 0.7f);
                 }
             }
             else
@@ -90,8 +90,16 @@ public class Bird : MonoBehaviour
                 GetHit();
             }
         }
+
+
     }
-    
+
+    private void CompleteLevelDelayed()
+    {
+        gameDirector.LevelCompleted();
+        gameObject.SetActive(false);
+    }
+
     public void CoinCollected()
     {
         coinManager.CoinCollected();
@@ -133,9 +141,10 @@ public class Bird : MonoBehaviour
 
         //gameDirector.GameOver();   // pipe'ları durdurmak vb.
 
-        gameObject.SetActive(false); // kuş “yok olsun”
+       
         gameDirector.OnBirdDestroyed(); // üst seviyeye haber ver
-        
+        gameObject.SetActive(false); // kuş “yok olsun”
+
     }
 
 

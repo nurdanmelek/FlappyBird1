@@ -1,11 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+
+    public AudioSource winAS;
     public AudioSource trueAnswerAS;
     public AudioSource coinAS;
     public AudioSource impactAS;
     public AudioSource explodeAS;
+
+    public List<AudioSource> musicASs;
 
     public void PlayImpactAS()
     {
@@ -43,5 +48,28 @@ public class AudioManager : MonoBehaviour
     {
         if (trueAnswerAS != null)
             trueAnswerAS.PlayOneShot(trueAnswerAS.clip);
+    }
+
+    public void PlayWinAS()
+    {
+        if (winAS != null)
+            winAS.PlayOneShot(winAS.clip);
+    }
+
+    public void StartMusic()
+    {
+        if (musicASs.Count > 0 && musicASs[0] != null)
+        {
+            musicASs[0].Play();
+        }
+    }
+
+    public void StopMusic()
+    {
+        foreach (var music in musicASs)
+        {
+            if (music != null)
+                music.Stop();
+        }
     }
 }

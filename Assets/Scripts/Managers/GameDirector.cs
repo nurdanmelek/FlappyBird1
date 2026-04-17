@@ -67,12 +67,20 @@ public class GameDirector : MonoBehaviour
     {
         gateManager.StopGateManager();
         obstacleManager.StopRun();
+        coinManager.StopCoinSpawnCoroutine();
+        audioManager.StopMusic();
+
+        uIManager.LevelFailed();
     }
 
     public void LevelCompleted()
     {
         gateManager.StopGateManager();
         obstacleManager.StopRun();
+        coinManager.StopCoinSpawnCoroutine();
+
+        audioManager.StopMusic();
+        audioManager.PlayWinAS();
         seedManager.RandomizeSeed();
         uIManager.ShowWinUI();
     }
@@ -88,8 +96,9 @@ public class GameDirector : MonoBehaviour
         bird.RestartBird();
         coinManager.StartCoinSpawnCoroutine();
         
-        obstacleManager.StartRun(); 
+        obstacleManager.StartRun();
 
+        audioManager.StartMusic();
         uIManager.ShowInGameUI();
 
     }

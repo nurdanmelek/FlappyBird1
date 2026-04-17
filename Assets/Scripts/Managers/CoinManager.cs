@@ -29,7 +29,7 @@ public class CoinManager : MonoBehaviour
     {
         while (true)
         {
-            var spawnTime = UnityEngine.Random.Range(3f, 6f);
+            var spawnTime = UnityEngine.Random.Range(8f, 15f);
             var spawnPos = new Vector3(UnityEngine.Random.Range(-3f, 3f), 4, 0);
             yield return new WaitForSeconds(spawnTime);
             CreateCoinAtPosition(spawnPos);

@@ -112,4 +112,9 @@ public class UIManager : MonoBehaviour
     {
         PlayGameButtonPressed();
     }
+
+    public void LoadNextLevelButtonPressed()
+    {
+        gameDirector.RestartLevel();
+    }
 }

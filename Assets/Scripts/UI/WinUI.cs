@@ -35,6 +35,12 @@ public class WinUI : MonoBehaviour
         _canvasGroup.DOFade(0, .1f).OnComplete(() => gameObject.SetActive(false));  // canvas grubu gizle ve gizleme i�lemi bitti�inde objeyi tamamen kapat
     }
 
+    public void LoadNextLevelButtonPressed()
+    {
+        uIManager.LoadNextLevelButtonPressed();
+        Hide();
+    }
+
 
     /*private void RestartButtonPressed()
     {

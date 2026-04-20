@@ -1327,6 +1327,9 @@ MonoBehaviour:
   gameDirector: {fileID: 1110403915}
   questionTMP: {fileID: 1684755609}
   rightAnswer: 
+  currentSelectedIndex: 0
+  selectedKeys: 
+  rightAnswerCounts: 000000000000000000000000
 --- !u!4 &306574454
 Transform:
   m_ObjectHideFlags: 0

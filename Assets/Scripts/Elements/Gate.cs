@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
@@ -16,6 +17,9 @@ public class Gate : MonoBehaviour
     private Vector3 pos1;
     private Vector3 pos2;
     private Vector3 pos3;
+    
+    public SpriteRenderer rightAnswerIcon;
+    public SpriteRenderer wrongAnswerIcon;
     
     public void StartGate(List<string> turkishWords)
     {
@@ -73,5 +77,27 @@ public class Gate : MonoBehaviour
     private void Update()
     {
         transform.position += Vector3.left * Time.deltaTime * speed;
+    }
+
+    public void OptionSelected(Option option, bool isRightAnswer)
+    {
+        option.gameObject.SetActive(false);
+        if (isRightAnswer)
+        {
+            rightAnswerIcon.gameObject.SetActive(true);
+            rightAnswerIcon.transform.position = option.transform.position;
+            rightAnswerIcon.transform.localScale = Vector3.zero;
+            rightAnswerIcon.transform.DOScale(1, .2f).SetEase(Ease.OutBack);
+        }
+        else
+        {
+            wrongAnswerIcon.gameObject.SetActive(true);
+            wrongAnswerIcon.transform.position = option.transform.position;
+            wrongAnswerIcon.transform.localScale = Vector3.zero;
+            wrongAnswerIcon.transform.DOScale(1, .2f).SetEase(Ease.OutBack);
+        }
+        option1.GetComponent<BoxCollider2D>().enabled = false;
+        option2.GetComponent<BoxCollider2D>().enabled = false;
+        option3.GetComponent<BoxCollider2D>().enabled = false;
     }
 }

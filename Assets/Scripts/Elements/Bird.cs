@@ -29,26 +29,50 @@ public class Bird : MonoBehaviour
 
     private int _continuousRightAnswer;
 
+    public int currentSelectedIndex;
+    public List<int> selectedKeys;
+    public List<int> rightAnswerCounts;
 
     private void Awake()
     {
         _audioManager = gameDirector.audioManager;
     }
-
     private void OnEnable()
     {
         _currentHealth = startHealth;
-
-       
     }
-    
     public void RestartBird()
     {
         gameObject.SetActive(true);
-        var keys = new List<int>(wordsManager.currentLevelKeys);
-        var selectedKey = keys[Random.Range(0, keys.Count)];
+        selectedKeys = new List<int>(wordsManager.currentLevelKeys);
+        currentSelectedIndex = Random.Range(0, selectedKeys.Count);
+        var selectedKey = selectedKeys[currentSelectedIndex];
         questionTMP.text = wordsManager.latinWords[selectedKey];
         rightAnswer = wordsManager.turkishWords[selectedKey];
+    }
+    
+    public void ChangeRightAnswer()
+    {
+        rightAnswerCounts[currentSelectedIndex] += 1;
+
+        if (rightAnswerCounts[currentSelectedIndex] == 2)
+        {
+            selectedKeys.RemoveAt(currentSelectedIndex);
+            rightAnswerCounts.RemoveAt(currentSelectedIndex);
+        }
+
+        if (selectedKeys.Count == 0)
+        {
+            gameObject.SetActive(false);
+            Invoke(nameof(CompleteLevelDelayed), 0.7f);    
+        }
+        else
+        {
+            currentSelectedIndex = Random.Range(0, selectedKeys.Count);
+            var selectedKey = selectedKeys[currentSelectedIndex];
+            questionTMP.text = wordsManager.latinWords[selectedKey];
+            rightAnswer = wordsManager.turkishWords[selectedKey];    
+        }
     }
 
     void LateUpdate()
@@ -67,25 +91,18 @@ public class Bird : MonoBehaviour
 
         if (collision.CompareTag("Option"))
         {
-            if (collision.GetComponent<Option>().currentText == rightAnswer)
+            var option = collision.GetComponent<Option>();
+            if (option.currentText == rightAnswer)
             {
                 _audioManager.PlayTrueAnswerAS();
-
-                collision.gameObject.SetActive(false);
-
-                _continuousRightAnswer++;
                 
-                print(_continuousRightAnswer);
-
-                if (_continuousRightAnswer == 2)
-                {
-                    gameObject.SetActive(false);
-                    _continuousRightAnswer = 0;
-                    Invoke(nameof(CompleteLevelDelayed), 0.7f);
-                }
+                option.OptionSelected(true);
+                
+                ChangeRightAnswer();
             }
             else
             {
+                option.OptionSelected(false);
                 _continuousRightAnswer = 0;
                 GetHit();
             }

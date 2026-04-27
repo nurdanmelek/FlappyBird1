@@ -10,6 +10,7 @@ public class ObstacleSpawner : MonoBehaviour
     public GameObject pipePrefab;
 
     private float _minY = -4f;
+
     private float _maxY = 4f;
 
     public void Init()
